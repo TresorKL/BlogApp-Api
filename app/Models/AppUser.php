@@ -9,6 +9,7 @@ class AppUser extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['firstName','lastName','email'];
     public function post(){
         return $this->hasMany(Post::class);
     }
