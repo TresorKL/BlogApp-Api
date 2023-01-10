@@ -27,4 +27,30 @@ class BlogController extends Controller
 
 
     }
+
+    function getUserPost($id){
+
+        $posts=Post::where('app_user_id','=',$id)->get();
+
+        return response()->json([
+            "status"=>true,
+            "user_id"=>$id,
+            "posts"=>$posts
+        ]);
+    }
+
+
+    function postComment(Request $request){
+
+        $post= Post::find($request->postId);
+
+        $post->comment()->create([
+            "commentBody"=>$request->commentBody
+        ]);
+
+        return response()->json([
+            "status"=>true,
+            "message"=>"Comment successfully posted"
+        ]);
+    }
 }

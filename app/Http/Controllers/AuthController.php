@@ -30,9 +30,31 @@ class AuthController extends Controller
         return response()->json([
             "status"=>true,
             "message"=>"Account successfully created",
+            "accessToken"=>$user->createToken("API TOKEN")->plainTextToken
             
       ],200);
       
+    }
+
+    function login(Request $request){
+
+        if(!Auth::attempt($request->only(['email','password']))){
+            return response()->json([
+                "status"=>false,
+                "message"=>"invalid credentials",
+               
+             ],401);
+         }
+        
+         $appUser =AppUser::where('email', $request->email)->get();
+
+         $user =User::where('email', $request->email)->first();
+         return response()->json([
+            "status"=>true,
+            "message"=>"Logged successfully",
+            "user"=>$appUser,
+            "token"=>$user->createToken("API TOKEN")->plainTextToken
+      ],200);
     }
 
 
