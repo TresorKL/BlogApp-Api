@@ -38,5 +38,9 @@ class AuthController extends Controller
 
     function getUsers(){
 
+        return response()->json([
+            "status"=>true,
+            "data"=>AppUser::all()
+        ]);
     }
 }
